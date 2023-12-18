@@ -91,12 +91,12 @@ export async function GET(req: NextRequest) {
   const session = await getServerSession();
   const userEmail = session?.user?.email;
 
-    try {
-      const userAccountSanity = (
-        await sanityClient.fetch(
-          `*[_type == 'account' && email == '${userEmail}']`
-        )
-      )[0];
+  try {
+    const userAccountSanity = (
+      await sanityClient.fetch(
+        `*[_type == 'account' && email == '${userEmail}']`
+      )
+    )[0];
     if (userAccountSanity) {
       return NextResponse.json(userAccountSanity, { status: 200 });
     } else {
@@ -104,7 +104,5 @@ export async function GET(req: NextRequest) {
     }
   } catch (error) {
     return NextResponse.json({}, { status: 500 });
-    }
-    
-
+  }
 }
