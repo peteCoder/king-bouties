@@ -12,7 +12,7 @@ interface UserDetailsProps {
   image: string | null | undefined;
 }
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? "",
