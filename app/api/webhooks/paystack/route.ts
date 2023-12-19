@@ -1,8 +1,17 @@
 import { sanityClient } from "@/lib/client";
-import { SanityClient } from "@sanity/client";
 import axios from "axios";
 import crypto from "crypto";
 import { NextResponse } from "next/server";
+
+const corsHeader = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeader });
+}
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -76,11 +85,17 @@ export async function POST(req: Request) {
       }
     }
 
-    return NextResponse.json({ message: "It worked" }, { status: 200 });
+    return NextResponse.json(
+      { message: "It worked" },
+      { status: 200, headers: corsHeader }
+    );
   }
   // Do nothing here if the event hook was not a success.
 
-  return NextResponse.json({ message: "Not Successfull" }, { status: 400 });
+  return NextResponse.json(
+    { message: "Not Successfull" },
+    { status: 400, headers: corsHeader }
+  );
 }
 
 export async function GET(req: Request) {

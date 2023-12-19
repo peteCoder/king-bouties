@@ -14,7 +14,6 @@ const ProductDetails = async ({
   const productArray = await getProductDetails(productId);
   const product = productArray[0];
 
-
   // Related Products are fetched here
   const productsBasedOnCategory: ProductSanitySchemaResult[] =
     await getRelatedProductsByCategory(product?.category?._id);
