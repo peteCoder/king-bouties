@@ -22,10 +22,10 @@ const DetailPageGallery = ({
 
   return (
     <ThemeProvider>
-      <div className="flex gap-2 relative">
+      <div className="flex gap-2 relative justify-center items-center">
         <div className="h-[550px] hidden sm:block sm:basis-1/4">
           {/* Smaller Images */}
-          {product?.gallery?.map((product, index) => (
+          {/* {product?.gallery?.map((product, index) => (
             <div
               key={product?._id}
               onClick={() => handleThumbnailClick(index)}
@@ -36,30 +36,30 @@ const DetailPageGallery = ({
                 index === customIndex ? "border-2 border-blue-500" : ""
               }`}
             ></div>
-          ))}
+          ))} */}
         </div>
         <Carousel
           className="sm:basis-3/4 h-[550px] text-[#9d9d9d] rounded-2xl relative"
           navigation={({ setActiveIndex, activeIndex, length }) => {
-            return (
-              <div className="flex gap-2 absolute left-0 z-[10]">
-                {product?.gallery?.map((product, i) => (
-                  <div
-                    key={product._id}
-                    onClick={() => {
-                      setCustomIndex(i);
-                      setActiveIndex(i);
-                    }}
-                    style={{
-                      backgroundImage: `url(${urlFor(product?.imageUrl)})`,
-                    }}
-                    className={`h-20 w-20 bg-cover bg-center bg-no-repeat cursor-pointer ${
-                      i === activeIndex ? "border-2 border-blue-500" : ""
-                    }`}
-                  ></div>
-                ))}
-              </div>
-            );
+            // return (
+            //   <div className="flex gap-2 absolute left-0 z-[10]">
+            //     {product?.gallery?.map((product, i) => (
+            //       <div
+            //         key={product._id}
+            //         onClick={() => {
+            //           setCustomIndex(i);
+            //           setActiveIndex(i);
+            //         }}
+            //         style={{
+            //           backgroundImage: `url(${urlFor(product?.imageUrl)})`,
+            //         }}
+            //         className={`h-20 w-20 bg-cover bg-center bg-no-repeat cursor-pointer ${
+            //           i === activeIndex ? "border-2 border-blue-500" : ""
+            //         }`}
+            //       ></div>
+            //     ))}
+            //   </div>
+            // );
           }}
           prevArrow={({ handlePrev }) => (
             <IconButton
