@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ModalProvider from "@/providers/ModalProvider";
-import SessionProvider from "../providers/sessionProvider"
+import SessionProvider from "../providers/sessionProvider";
 import { getServerSession } from "next-auth";
 import ToastProvider from "@/providers/ToastProvider";
+
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +25,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SessionProvider session={session}>
-          {children}
-          <ModalProvider />
-          <ToastProvider />
-        </SessionProvider>
+        
+          <SessionProvider session={session}>
+            {children}
+            <ModalProvider />
+            <ToastProvider />
+          </SessionProvider>
       </body>
     </html>
   );

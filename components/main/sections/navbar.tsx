@@ -14,6 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import ProfileLoginDialog from "../profile-login-dialog";
+import { ModeToggle } from "@/components/theme-dropdown";
 
 const Navbar = () => {
   // Get the user data from the session upon login

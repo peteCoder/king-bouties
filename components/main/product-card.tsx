@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { Star, StarIcon } from "lucide-react";
 import Image from "next/image";
 import React, { MouseEventHandler, useEffect, useState } from "react";
@@ -124,14 +124,18 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
             <div className="ratings flex items-center gap-1">
               <>
                 {Array.from({ length: product?.ratings }).map((_, i) => (
-                  <IoStar color={"#FFD700"} key={i} size={12} />
+                  <IoStar color={"#FFD700"} key={i} size={15} />
                 ))}
               </>
             </div>
           )}
           <div className="space-y-1">
-            <div className="text-[14px] text-[#191919]">{product?.name}</div>
-            <div className="text-[14px] text-[#191919]">{product?.price}</div>
+            <div className="text-[18px] text-[#191919] font-bold">
+              {product?.name}
+            </div>
+            <div className="text-[19px] text-[#191919]">
+              {formatCurrency(product?.price)}
+            </div>
           </div>
 
           {/* Smaller Images */}
