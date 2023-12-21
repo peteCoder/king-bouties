@@ -28,7 +28,7 @@ type Product = {
   price: number;
   is_featured: boolean;
   is_archived: boolean;
-  qty_available?: number;
+  qty_available: number;
   description?: string;
   sizes: Size[];
   category: Category;
@@ -52,6 +52,7 @@ interface HeroBanner {
   textColor: string;
   subTitle: string;
   bannerImage: Image;
+  category: Category;
   _createdAt: string;
   _updatedAt: string;
 }

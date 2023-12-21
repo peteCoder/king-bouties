@@ -2,10 +2,10 @@ import Navbar from "@/components/main/sections/navbar";
 import React from "react";
 import FormData from "./_components/formData";
 import OrderSummary from "./_components/orderSummary";
-import axios from "axios";
 import { getServerSession } from "next-auth";
 import { sanityClient } from "@/lib/client";
 import { UserShippingDataForCheckoutForm } from "@/types";
+import { redirect } from "next/navigation";
 
 const CheckoutPage = async () => {
   const session = await getServerSession();
@@ -25,6 +25,10 @@ const CheckoutPage = async () => {
 
   const shippingDetails: UserShippingDataForCheckoutForm =
     userShippingDataSanity?.shippingDetails;
+
+  if (!session?.user) {
+    return redirect("/cart");
+  }
 
   return (
     <main>

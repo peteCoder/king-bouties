@@ -43,9 +43,9 @@ const authOptions: AuthOptions = {
       return true;
     },
 
-    async redirect({ url, baseUrl }) {
-      return baseUrl;
-    },
+    // async redirect({ url, baseUrl }) {
+    //   return "/cart";
+    // },
     async session({ session, user }) {
       // If you need to customize the session data, you can do it here
       return session;

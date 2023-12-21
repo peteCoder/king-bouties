@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Star, StarIcon } from "lucide-react";
 import Image from "next/image";
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 
 // Icons
 import { IoEyeOutline, IoStar } from "react-icons/io5";
@@ -25,6 +25,7 @@ interface ProductProps {
 
 // Components
 const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
+  const [hasMounted, setHasMounted] = useState(false);
   const previewProduct = usePreviewModal();
   const [activeSize, setActiveSize] = useState("");
   // Change this when sanity is connected
@@ -44,10 +45,20 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
     console.log(previewProduct.isOpen);
   };
 
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) {
+    return null;
+  }
+
   return (
     <div
       className="text-center p-2 sm:p-0"
-      onClick={() => router.push(`/product/${product._id}`)}
+      onClick={() =>
+        product.qty_available > 0 && router.push(`/product/${product._id}`)
+      }
     >
       <div className="relative group duration-700 min-h-[300px] md:min-h-[350px] bg-[#f1f5f9] overflow-hidden">
         {/* w-[250px] md:h-[350px] md:w-[280px] mx-auto */}
@@ -100,6 +111,7 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
               alt="image"
             />
           </div>
+          // #2563EB
         )}
       </div>
       {/* Details to transform onhover */}
@@ -132,7 +144,7 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
                 }}
                 key={product._id}
                 className={cn(
-                  "h-10 w-10 rounded-xl overflow-hidden md:h-[42px] md:w-[42px] bg-[#f1f5f9]",
+                  "h-10 w-auto rounded-xl overflow-hidden  md:h-[50px] md:w-auto bg-[#f1f5f9]",
                   urlFor(product?.imageUrl)?.url() === activeImageUrl &&
                     "border-2 border-primary"
                 )}
@@ -186,29 +198,33 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
             ))}
           </div> */}
           {/* Button to add to cart */}
-          <div className="flex justify-center items-center opacity-0 group-hover:opacity-100 duration-700 ">
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                cart.addItemToCart(product);
-              }}
-              className="uppercase flex gap-1 items-center"
-            >
-              <HiOutlineShoppingBag size={18} />
-              <span>Add to cart</span>
-            </Button>
-          </div>
-          <div className="flex justify-center items-center opacity-0 group-hover:opacity-100 duration-700 ">
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              className="uppercase flex gap-1 items-center opacity-20"
-            >
-              <HiOutlineShoppingBag size={18} />
-              <span>Sold out</span>
-            </Button>
-          </div>
+
+          {product.qty_available <= 0 ? (
+            <div className="flex justify-center items-center opacity-0 group-hover:opacity-100 duration-700 ">
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                className="uppercase flex gap-1 items-center opacity-20"
+              >
+                <HiOutlineShoppingBag size={18} />
+                <span>Sold out</span>
+              </Button>
+            </div>
+          ) : (
+            <div className="flex justify-center items-center opacity-0 group-hover:opacity-100 duration-700 ">
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  cart.addItemToCart(product);
+                }}
+                className="uppercase flex gap-1 items-center"
+              >
+                <HiOutlineShoppingBag size={18} />
+                <span>Add to cart</span>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>

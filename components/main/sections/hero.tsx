@@ -6,6 +6,8 @@ import { HeroBannerSchemaResult } from "@/types";
 const Hero = async () => {
   const heroBanner: HeroBannerSchemaResult[] = await getHeroBanners();
 
+  // console.log(heroBanner);
+
   // console.log(JSON.stringify(heroBanner));
   return <CarouselTransition heroBanner={heroBanner} />;
 };

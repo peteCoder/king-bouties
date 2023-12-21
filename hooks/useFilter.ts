@@ -16,6 +16,7 @@ interface UseFilterInterface {
   addCategory: (category: { _id: string; name: string }) => void;
   addOrderOfItems: (orderOfItems: { orderOfItems: string }) => void;
   addSize: (size: { _id: string; name: string }) => void;
+  removeAllFilter: () => void;
 }
 
 export const useFilter = create(
@@ -35,12 +36,12 @@ export const useFilter = create(
       addCategory: (category) => {
         const prev = get().filteredData;
 
-        set({ filteredData: { ...prev, ...category } });
+        set({ filteredData: { ...prev, category } });
       },
       addSize: (size) => {
         const prev = get().filteredData;
 
-        set({ filteredData: { ...prev, ...size } });
+        set({ filteredData: { ...prev, size } });
       },
 
       addOrderOfItems: (orderOfItems) => {
@@ -65,7 +66,7 @@ export const useFilter = create(
       },
     }),
     {
-      name: "@cart-storage", // name of the item in the storage (must be unique)
+      name: "@filter-storage", // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
     }
   )

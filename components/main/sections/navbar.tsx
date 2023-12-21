@@ -13,6 +13,7 @@ import CartDropdown from "../cart-dropdown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import ProfileLoginDialog from "../profile-login-dialog";
 
 const Navbar = () => {
   // Get the user data from the session upon login
@@ -26,13 +27,14 @@ const Navbar = () => {
           <div className="md:flex md:items-center py-4 px-4">
             {/* Logo */}
             <div className="w-[127.34px] hidden md:block">
-              <Image
-                className="w-[94.34px] h-[19.98px]"
-                src={"/logo.png"}
+              {/* <Image
+                className="w-[123.34px] h-[76.98px]"
+                src={"/j-logo-bg-removed-2.png"}
                 alt="logo"
-                width={1085}
-                height={230}
-              />
+                width={791}
+                height={489}
+              /> */}
+              <span className="text-primary font-bold text-3xl mt-5">KB&F</span>
             </div>
             {/* Nav Items */}
             <nav className="flex-1">
@@ -44,12 +46,12 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href={"/"} className="nav-links">
+                  <Link href={"/shop"} className="nav-links">
                     Shop
                   </Link>
                 </li>
                 <li>
-                  <Link href={"/"} className="nav-links">
+                  <Link href={"/contact"} className="nav-links">
                     Contact
                   </Link>
                 </li>
@@ -62,22 +64,11 @@ const Navbar = () => {
                 {/* Here is the mobile menu trigger */}
                 <MobileMenu />
               </div>
-              <div className="nav-links">
+              {/* Add search later */}
+              {/* <div className="nav-links">
                 <SearchIcon size={20} />
-              </div>
-              {session?.user?.email ? (
-                <Avatar onClick={() => signOut()}>
-                  <AvatarImage src={session?.user?.image || ""} />
-                  <AvatarFallback>P</AvatarFallback>
-                </Avatar>
-              ) : (
-                <>
-                  {/* Login functionality here */}
-                  <div className="nav-links">
-                    <HiOutlineUser size={20} />
-                  </div>
-                </>
-              )}
+              </div> */}
+              <ProfileLoginDialog />
 
               <CartDropdown />
             </div>
@@ -85,14 +76,16 @@ const Navbar = () => {
         </div>
       </div>
       <div className="mt-[70px]"></div>
-      <div className="w-full h-10 flex justify-center items-center  md:hidden">
-        <Image
-          className="w-[94.34px] h-[19.98px]"
-          src={"/logo.png"}
+      <div className="w-full h-10 mt-4 flex justify-center items-center  md:hidden">
+        {/* <Image
+          className="w-[123.34px] h-[76.98px]"
+          src={"/j-logo-bg-removed-2.png"}
           alt="logo"
-          width={1085}
-          height={230}
-        />
+          width={791}
+          height={489}
+        /> */}
+
+        <span className="text-primary font-bold text-3xl mt-5">KB&F</span>
       </div>
     </header>
   );

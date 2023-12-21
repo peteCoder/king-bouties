@@ -6,6 +6,8 @@ import ProductsList from "./_components/ProductsList";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
+import { TbFilters } from "react-icons/tb";
+
 const Shop = () => {
   const [filterSideOpen, setFilterSideOpen] = useState(false);
 
@@ -38,8 +40,9 @@ const Shop = () => {
             <Button
               variant={"link"}
               onClick={() => setFilterSideOpen((prev) => !prev)}
-              className="block lg:hidden text-primary !p-0"
+              className="flex items-center lg:hidden text-primary text-[18px] !p-0"
             >
+              <TbFilters size={30} className="" />
               Filter
             </Button>
             <ProductsList />

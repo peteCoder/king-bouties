@@ -27,10 +27,19 @@ const FilterSidebar = () => {
 
   const filteredData = useFilter();
 
+  const categoryId = filteredData?.filteredData?.category?._id;
+
+  const sizeId = filteredData?.filteredData?.size?._id;
+
   const selectCategory = (category: { _id: string; name: string }) => {
+    console.log("Category is changed");
+    console.log(category);
     filteredData.addCategory(category);
   };
-  const selectSize = (size: { _id: string; name: string }) => {};
+  const selectSize = (size: { _id: string; name: string }) => {
+    console.log("Size is changed");
+    filteredData.addSize(size);
+  };
 
   useEffect(() => {
     const allCategories = async () => {
@@ -81,7 +90,19 @@ const FilterSidebar = () => {
                 <AccordionContent>
                   <ul className="space-y-3 capitalize">
                     {categories.map((category: any) => (
-                      <li className="capitalize" key={category._id}>
+                      <li
+                        onClick={() =>
+                          selectCategory({
+                            _id: category._id,
+                            name: category.name,
+                          })
+                        }
+                        className={cn(
+                          "capitalize cursor-pointer",
+                          categoryId === category._id && "text-primary"
+                        )}
+                        key={category._id}
+                      >
                         {category.name}
                       </li>
                     ))}
@@ -120,12 +141,14 @@ const FilterSidebar = () => {
                     {sizes.map((size: any) => (
                       <Button
                         className={cn(
-                          "bg-white text-black hover:text-white px-3 h-9 w-9 flex items-center justify-center hover:bg-primary"
-                          //   size?._id === activeSize && "bg-primary text-white"
+                          "bg-white text-black hover:text-white px-3 h-9 w-9 flex items-center justify-center hover:bg-primary",
+                            size?._id === sizeId && "bg-primary text-white"
                         )}
                         onClick={(e) => {
-                          //   e.stopPropagation();
-                          //   setActiveSize(size?._id);
+                          selectSize({
+                            _id: size?._id,
+                            name: size?.name,
+                          });
                         }}
                         key={size?._id}
                       >

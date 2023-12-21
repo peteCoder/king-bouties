@@ -1,9 +1,13 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import Link from "next/link";
 import { CategorySanitySchemaResult } from "@/types";
 import { urlFor } from "@/lib/client";
+import { useFilter } from "@/hooks/useFilter";
+import { useRouter } from "next/navigation";
 
 interface CategoryProps {
   name: string;
@@ -16,6 +20,16 @@ const CategoryCard: React.FC<CategoryProps> = ({
   featuredCategory,
   index,
 }) => {
+  const router = useRouter();
+  const filteredData = useFilter();
+
+  const goToCategory = (category: { _id: string; name: string }) => {
+    filteredData.addCategory(category);
+    if (category._id && category.name) {
+      router.push(`/shop`);
+    }
+  };
+
   return (
     <div
       style={{
@@ -29,10 +43,15 @@ const CategoryCard: React.FC<CategoryProps> = ({
       )}
     >
       <Button
-        asChild
+        onClick={() =>
+          goToCategory({
+            _id: featuredCategory._id,
+            name: featuredCategory.name,
+          })
+        }
         className="bg-white/60 text-black hover:text-white min-w-[120px] min-h-[50px] uppercase text-lg"
       >
-        <Link href={`/categories/${featuredCategory?._id}`}>{name}</Link>
+        {name}
       </Button>
     </div>
   );

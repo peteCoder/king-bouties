@@ -15,7 +15,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 const MobileMenu = () => {
-
   return (
     <div>
       <Sheet>
@@ -25,14 +24,18 @@ const MobileMenu = () => {
         <SheetContent>
           <SheetHeader>
             <SheetTitle>
-              <div className="w-[127.34px] block">
-                <Image
-                  className="w-[94.34px] h-[19.98px]"
-                  src={"/logo.png"}
+              <div className="block">
+                {/* <Image
+                  className="w-[123.34px] h-[76.98px]"
+                  src={"/j-logo-bg-removed.png"}
                   alt="logo"
                   width={1085}
                   height={230}
-                />
+                /> */}
+
+                <span className="text-primary font-bold text-3xl mt-5">
+                  KB&F
+                </span>
               </div>
             </SheetTitle>
           </SheetHeader>
@@ -46,14 +49,17 @@ const MobileMenu = () => {
               </li>
               <li className="!text-left">
                 <Link
-                  href={"/"}
+                  href={"/shop"}
                   className="nav-links inline-block text-5xl text-left"
                 >
                   Shop
                 </Link>
               </li>
               <li className="!text-left">
-                <Link href={"/"} className="nav-links inline-block text-left">
+                <Link
+                  href={"/contact"}
+                  className="nav-links inline-block text-left"
+                >
                   Contact
                 </Link>
               </li>

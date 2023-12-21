@@ -7,58 +7,76 @@ export async function GET(req: NextRequest) {
     // `/api/product?search=foo&country=bar&product_name=foo&orderOfItems=price%20asc`
     const searchURL = new URL(req.url);
 
+    console.log(searchURL.href);
+
     const { searchParams } = searchURL;
 
     // These are the search query parameters gotten from the URL
     // The searchParams.get() method will return an empty string if
     // the user sends nothing.
 
-    const searchTerm = searchParams.get("search");
-    const color = searchParams.get("color");
-    const categoryName = searchParams.get("categoryName");
-    const orderOfItems = searchParams.get("orderOfItems");
-    const priceRange = searchParams.get("priceRange");
+    const categoryId = searchParams.get("categoryId");
+    const sizeId = searchParams.get("sizeId");
+    // const categoryName = searchParams.get("categoryName");
+    // const orderOfItems = searchParams.get("orderOfItems");
+    // const priceRange = searchParams.get("priceRange");
 
-    const query = `*[_type == 'product']{
-    _id,
-    _updatedAt,
-    _createdAt,
-    name,
-    price,
-    is_featured,
-    is_archived,
-    qty_available,
-    description,
-    ratings,
-    sizes[]->{
-        _id,
-        name,
-        code
-    },
-    category->{
-        _id,
-        name,
-        description,
-        bannerImage{
-            asset->{
-                url
+    console.log("categoryId", typeof categoryId);
+
+    const query = `*[_type == 'product' && category->_id match $categoryId]{
+      _id,
+      _updatedAt,
+      _createdAt,
+      name,
+      price,
+      is_featured,
+      is_archived,
+      qty_available,
+      description,
+      ratings,
+      sizes[]->{
+            _id,
+            name,
+            code
+      },
+      category->{
+            _id,
+            name,
+            description,
+            bannerImage{
+                asset->{
+                    url
+                }
             }
-        }
-    },
-    gallery[]->{
-        _id,
-        _updatedAt,
-        _createdAt,
-        imageUrl {
-            asset->{url}
-        },
-        description
+      },
+      gallery[]->{
+            _id,
+            _updatedAt,
+            _createdAt,
+            imageUrl {
+                asset->{url}
+            },
+            description
+      }
+    }`;
+    const products = await sanityClient.fetch(query, {
+      categoryId: `${categoryId}*`,
+    });
+
+    // If sizeId is provided, filter the products by sizeId
+    if (sizeId) {
+      const filteredProducts = products.filter((product: any) =>
+        product?.sizes?.some((size: any) => size._id === sizeId)
+      );
+      // console.log("Filtered Products: ", filteredProducts);
+      return NextResponse.json(filteredProducts, { status: 200 });
     }
-  }`;
-    const products = await sanityClient.fetch(query);
+
+    // console.log("All Products: ", products);
 
     return NextResponse.json(products, { status: 200 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ error: "Server Error" }, { status: 500 });
   }
 }

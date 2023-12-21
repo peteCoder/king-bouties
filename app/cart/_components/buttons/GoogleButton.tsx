@@ -3,8 +3,14 @@ import { signIn } from "next-auth/react";
 import React from "react";
 
 const GoogleButton = () => {
+
   return (
-    <Button variant={"outline"} onClick={() => signIn("google")}>
+    <Button
+      variant={"outline"}
+      onClick={() =>
+        signIn("google", { callbackUrl: "/cart" })
+      }
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 48 48"

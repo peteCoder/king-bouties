@@ -6,12 +6,22 @@ import { Button } from "@/components/ui/button";
 import { HeroBannerSchemaResult } from "@/types";
 import { urlFor } from "@/lib/client";
 import Link from "next/link";
+import { useFilter } from "@/hooks/useFilter";
+import { useRouter } from "next/navigation";
 
 export function CarouselTransition({
   heroBanner,
 }: {
   heroBanner: HeroBannerSchemaResult[];
 }) {
+  const filteredData = useFilter();
+  const router = useRouter();
+
+  const goToCategory = (category: { _id: string; name: string }) => {
+    filteredData.addCategory(category);
+    router.push("/shop");
+  };
+
   return (
     <ThemeProvider>
       {/* First */}
@@ -24,7 +34,7 @@ export function CarouselTransition({
               color="white"
               size="lg"
               onClick={handlePrev}
-              className="!absolute top-2/4 left-4 -translate-y-2/4"
+              className="!absolute top-3/4 left-4 -translate-y-2/4"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -199,12 +209,22 @@ export function CarouselTransition({
                   <div className="text-lg font-light">{banner?.subTitle}</div>
                 </div>
 
-                <div className="">
-                  {/* This link directs user to a page with similar products */}
-                  <Button asChild className="md:min-w-[10rem] md:min-h-[3rem]">
-                    <Link href="#"> Shop Now!</Link>
-                  </Button>
-                </div>
+                {banner?.category && (
+                  <div className="">
+                    {/* This link directs user to a page with similar products */}
+                    <Button
+                      onClick={() =>
+                        goToCategory({
+                          name: banner.category?.name,
+                          _id: banner.category?._id,
+                        })
+                      }
+                      className="md:min-w-[10rem] md:min-h-[3rem]"
+                    >
+                      Shop Now!
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           ))}

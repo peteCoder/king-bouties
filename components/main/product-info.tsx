@@ -1,3 +1,5 @@
+"use client";
+
 import { formatCurrency } from "@/lib/utils";
 import { ProductSanitySchemaResult } from "@/types";
 import { Minus, Plus } from "lucide-react";
@@ -5,12 +7,19 @@ import React from "react";
 import { IoStar } from "react-icons/io5";
 import { Button } from "../ui/button";
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { useCart } from "@/hooks/useCart";
+import Link from "next/link";
 
 const ProductInfo = ({ data }: { data: ProductSanitySchemaResult }) => {
-  // console.log()
+  const numberItemsAlreadyInCart = useCart(
+    (state) => state.cartItems.find((item) => item._id === data._id)?.qty
+  );
+
+  const cart = useCart();
+
   return (
     <div className="space-y-4">
-      <div className="">Available: {data.qty_available}</div>
+      <div className="">Available: {data?.qty_available}</div>
       <div className="font-bold text-2xl space-y-2">
         <div className="">{data?.name}</div>
         <div className="text-primary text-2xl">
@@ -36,20 +45,46 @@ const ProductInfo = ({ data }: { data: ProductSanitySchemaResult }) => {
       )}
 
       <div className="flex sm:items-center gap-2 flex-col sm:flex-row my-8">
-        <div className="flex items-center bg-gray-400/20 max-w-[170px] justify-between w-full">
-          <button className="h-full p-4">
-            <Minus size={10} />
-          </button>
-          <div className="h-full p-4">2</div>
-          <button className="h-full p-4">
-            <Plus size={10} />
-          </button>
-        </div>
+        {numberItemsAlreadyInCart && (
+          <div className="flex items-center bg-gray-400/20 md:max-w-[170px] justify-between w-full rounded-md">
+            <button
+              className="h-full p-3"
+              onClick={() => cart.removeItemFromCart(data._id)}
+            >
+              <Minus size={15} />
+            </button>
+            <div className="h-full p-3">{numberItemsAlreadyInCart}</div>
+            <button
+              className="h-full p-3"
+              onClick={() => {
+                if (numberItemsAlreadyInCart >= data?.qty_available) {
+                  return;
+                } else {
+                  cart.addItemToCart(data);
+                }
+              }}
+            >
+              <Plus size={15} />
+            </button>
+          </div>
+        )}
 
-        <Button className="uppercase flex gap-1 items-center w-full min-h-[56px]">
-          <HiOutlineShoppingBag size={18} />
-          <span>Add to cart</span>
-        </Button>
+        {!numberItemsAlreadyInCart ? (
+          <Button
+            onClick={() => cart.addItemToCart(data)}
+            className="uppercase flex gap-1 items-center w-full min-h-[56px] flex-1"
+          >
+            <HiOutlineShoppingBag size={18} />
+            <span>Add to cart</span>
+          </Button>
+        ) : (
+          <Button
+            asChild
+            className="uppercase flex gap-1 items-center w-full min-h-[56px] flex-1"
+          >
+            <Link href={"/checkout"}>Checkout</Link>
+          </Button>
+        )}
       </div>
     </div>
   );

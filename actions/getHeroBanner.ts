@@ -8,11 +8,22 @@ export const getHeroBanners = async () => {
         title,
         subTitle,
         textColor,
+        category->{
+          _id,
+          name,
+          description,
+          bannerImage{
+            asset->{
+                url
+            }
+          }
+        },
         bannerImage{
             asset->{
                 url
             }
-        }
+        },
+        
     }`;
 
   const result = await sanityClient.fetch(query);

@@ -62,7 +62,13 @@ const DetailPageInfo = ({ data }: { data: ProductSanitySchemaResult }) => {
             <div className="h-full p-3">{numberItemsAlreadyInCart}</div>
             <button
               className="h-full p-3"
-              onClick={() => cart.addItemToCart(data)}
+              onClick={() => {
+                if (numberItemsAlreadyInCart >= data?.qty_available) {
+                  return;
+                } else {
+                  cart.addItemToCart(data);
+                }
+              }}
             >
               <Plus size={15} />
             </button>
