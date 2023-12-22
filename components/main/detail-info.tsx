@@ -81,7 +81,7 @@ const DetailPageInfo = ({ data }: { data: ProductSanitySchemaResult }) => {
                 if (numberItemsAlreadyInCart >= data?.qty_available) {
                   return;
                 } else {
-                  cart.addItemToCart(data);
+                  cart.addItemToCart(data, { sizeId: "", colourId: "" });
                 }
               }}
             >
@@ -91,7 +91,7 @@ const DetailPageInfo = ({ data }: { data: ProductSanitySchemaResult }) => {
         )}
         {!numberItemsAlreadyInCart ? (
           <Button
-            onClick={() => cart.addItemToCart(data)}
+            onClick={() => cart.addItemToCart(data, {sizeId: "", colourId: ""})}
             className="uppercase flex gap-1 items-center w-full min-h-[56px] flex-1"
           >
             <HiOutlineShoppingBag size={18} />
