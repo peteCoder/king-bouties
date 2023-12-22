@@ -86,7 +86,9 @@ const FavouriteData = () => {
                 <div className="flex items-center bg-gray-400/20 md:max-w-[170px] justify-between w-full rounded-md">
                   {!getNumberItemsAlreadyInCart(item._id) ? (
                     <Button
-                      onClick={() => cart.addItemToCart(item)}
+                      onClick={() =>
+                        cart.addItemToCart(item, { colourId: "", sizeId: "" })
+                      }
                       className="uppercase flex gap-1 items-center w-full min-h-[56px] flex-1"
                     >
                       <HiOutlineShoppingBag size={18} />
