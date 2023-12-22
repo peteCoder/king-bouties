@@ -1,7 +1,6 @@
 "use client";
 
 import { cn, formatCurrency } from "@/lib/utils";
-import { Star, StarIcon } from "lucide-react";
 import Image from "next/image";
 import React, { MouseEventHandler, useEffect, useState } from "react";
 
@@ -16,6 +15,7 @@ import { urlFor } from "@/lib/client";
 import usePreviewModal from "@/hooks/usePreviewModal";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/useCart";
+import { useFavourites } from "@/hooks/useFavourites";
 
 // Type
 interface ProductProps {
@@ -37,6 +37,9 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
 
   const cart = useCart();
 
+  const favourites = useFavourites();
+  const productsInFavourites = favourites.displayFavouritesData();
+
   const data = product;
 
   const showPopupModalForProduct: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -44,6 +47,19 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
     previewProduct.onOpen(data);
     console.log(previewProduct.isOpen);
   };
+
+  const productHasBeenAddedToFavouritesAlready = (productId: string) => {
+    const productAlreadyInFavourite = productsInFavourites.filter(
+      (product) => product._id === productId
+    );
+    if (productAlreadyInFavourite.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  console.log(cart.getAllOrderItems());
 
   useEffect(() => {
     setHasMounted(true);
@@ -61,8 +77,6 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
       }
     >
       <div className="relative group duration-700 min-h-[300px] md:min-h-[350px] bg-[#f1f5f9] overflow-hidden">
-        {/* w-[250px] md:h-[350px] md:w-[280px] mx-auto */}
-
         <div className="absolute top-0 right-0 flex flex-col space-y-2 z-10 group-hover:opacity-100 opacity-0 translate-x-[100%] group-hover:translate-x-0 duration-700 mr-3 mt-2">
           <div
             className="bg-white hover:bg-primary hover:text-white cursor-pointer duration-700 text-black w-10 h-10 rounded-full m-1 flex items-center justify-center"
@@ -75,8 +89,17 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
           <div
             onClick={(e) => {
               e.stopPropagation();
+              if (!productHasBeenAddedToFavouritesAlready(product._id)) {
+                favourites.addItemToFavourites(product);
+              } else {
+                favourites.removeItemFromFavourites(product._id);
+              }
             }}
-            className="bg-white hover:bg-primary hover:text-white cursor-pointer duration-700 text-black w-10 h-10 rounded-full m-1 flex items-center justify-center"
+            className={cn(
+              `bg-white hover:bg-primary hover:text-white cursor-pointer duration-700 text-black w-10 h-10 rounded-full m-1 flex items-center justify-center`,
+              productHasBeenAddedToFavouritesAlready(product._id) &&
+                "bg-primary text-white"
+            )}
             id="favourite"
           >
             <GrFavorite size={18} />
@@ -220,7 +243,10 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
               <Button
                 onClick={(e) => {
                   e.stopPropagation();
-                  cart.addItemToCart(product);
+                  cart.addItemToCart(product, {
+                    sizeId: activeSize,
+                    colourId: "",
+                  });
                 }}
                 className="uppercase flex gap-1 items-center"
               >

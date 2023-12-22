@@ -12,7 +12,13 @@ const Footer = async () => {
   };
 
   return (
-    <div className="py-[60px] md:px-10 px-[16px] w-full min-h-[40vh] border-t-2 border-t-[#E5E5E5] bg-primary">
+    <div
+      style={{
+        backgroundImage: `url('/j-logo-bg-removed-2.png')`,
+        backgroundBlendMode: "multiply",
+      }}
+      className="bg-cover bg-center bg-no-repeat bg-fixed py-[60px] md:px-10 px-[16px] w-full min-h-[40vh] border-t-2 border-t-[#E5E5E5] bg-primary"
+    >
       <div className="max-w-[1145px] mx-auto flex justify-center items-center">
         <div className="w-full flex flex-col lg:flex-row gap-8">
           {/* First Section --- Logo */}
@@ -74,7 +80,7 @@ const Footer = async () => {
                   className="hover:text-white transition-all duration-300"
                   href="/"
                 >
-                  support@kingsbouties.com
+                  support@kingsbowties.com
                 </Link>
                 <Link
                   className="hover:text-white transition-all duration-300"

@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
 
     const categoryId = searchParams.get("categoryId");
     const sizeId = searchParams.get("sizeId");
+    const colourId = searchParams.get("colourId");
     // const categoryName = searchParams.get("categoryName");
     // const orderOfItems = searchParams.get("orderOfItems");
     // const priceRange = searchParams.get("priceRange");
@@ -35,6 +36,11 @@ export async function GET(req: NextRequest) {
       description,
       ratings,
       sizes[]->{
+            _id,
+            name,
+            code
+      },
+      colours[]->{
             _id,
             name,
             code
@@ -64,10 +70,34 @@ export async function GET(req: NextRequest) {
     });
 
     // If sizeId is provided, filter the products by sizeId
-    if (sizeId) {
+    if (sizeId && !colourId) {
       const filteredProducts = products.filter((product: any) =>
         product?.sizes?.some((size: any) => size._id === sizeId)
       );
+      console.log("There is only size");
+      // console.log("Filtered Products: ", filteredProducts);
+      return NextResponse.json(filteredProducts, { status: 200 });
+    }
+
+    // If colourId is provided, filter the products by colourId
+    if (colourId && !sizeId) {
+      const filteredProducts = products.filter((product: any) =>
+        product?.colours?.some((colour: any) => colour._id === colourId)
+      );
+      console.log("There is only color");
+      // console.log("Filtered Products: ", filteredProducts);
+      return NextResponse.json(filteredProducts, { status: 200 });
+    }
+
+    if (colourId && sizeId) {
+      const filteredProducts = products
+        .filter((product: any) =>
+          product?.sizes?.some((size: any) => size._id === sizeId)
+        )
+        .filter((product: any) =>
+          product?.colours?.some((colour: any) => colour._id === colourId)
+        );
+      console.log("There is both size and color");
       // console.log("Filtered Products: ", filteredProducts);
       return NextResponse.json(filteredProducts, { status: 200 });
     }

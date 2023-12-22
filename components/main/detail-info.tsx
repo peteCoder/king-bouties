@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/accordion";
 import { useCart } from "@/hooks/useCart";
 import Link from "next/link";
+import { useFavourites } from "@/hooks/useFavourites";
 
 const DetailPageInfo = ({ data }: { data: ProductSanitySchemaResult }) => {
   const [hasMounted, setHasMounted] = useState(false);
@@ -24,6 +25,20 @@ const DetailPageInfo = ({ data }: { data: ProductSanitySchemaResult }) => {
   );
 
   const cart = useCart();
+
+  const favourites = useFavourites();
+  const productsInFavourites = favourites.displayFavouritesData();
+
+  const productHasBeenAddedToFavouritesAlready = (productId: string) => {
+    const productAlreadyInFavourite = productsInFavourites.filter(
+      (product) => product._id === productId
+    );
+    if (productAlreadyInFavourite.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   useEffect(() => {
     setHasMounted(true);
@@ -96,8 +111,24 @@ const DetailPageInfo = ({ data }: { data: ProductSanitySchemaResult }) => {
         <Button
           className="text uppercase hover:no-underline flex items-center gap-1"
           variant={"link"}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (!productHasBeenAddedToFavouritesAlready(data._id)) {
+              favourites.addItemToFavourites(data);
+            } else {
+              favourites.removeItemFromFavourites(data._id);
+            }
+          }}
         >
-          <GrFavorite size={20} /> Add to wishlist
+          {!productHasBeenAddedToFavouritesAlready(data._id) ? (
+            <>
+              <GrFavorite size={20} /> Add to wishlist
+            </>
+          ) : (
+            <>
+              <GrFavorite size={20} /> Remove from wishlist
+            </>
+          )}
         </Button>
       </div>
 

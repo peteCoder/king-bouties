@@ -18,18 +18,20 @@ import { useFilter } from "@/hooks/useFilter";
 
 const FilterSidebar = () => {
   const [categories, setCategories] = useState([]);
-  const [colors, setColours] = useState([]);
+  const [colours, setColours] = useState([]);
   const [sizes, setSizes] = useState([]);
 
   // Loading states
   const [loadCategories, setLoadCategories] = useState(true);
   const [loadSizes, setLoadSizes] = useState(true);
+  const [loadColours, setLoadColours] = useState(true);
 
   const filteredData = useFilter();
 
   const categoryId = filteredData?.filteredData?.category?._id;
 
   const sizeId = filteredData?.filteredData?.size?._id;
+  const colourId = filteredData?.filteredData?.colour?._id;
 
   const selectCategory = (category: { _id: string; name: string }) => {
     console.log("Category is changed");
@@ -39,6 +41,10 @@ const FilterSidebar = () => {
   const selectSize = (size: { _id: string; name: string }) => {
     console.log("Size is changed");
     filteredData.addSize(size);
+  };
+  const selectColour = (colour: { _id: string; name: string }) => {
+    console.log("Colour is changed");
+    filteredData.addColour(colour);
   };
 
   useEffect(() => {
@@ -65,9 +71,21 @@ const FilterSidebar = () => {
         setLoadSizes(false);
       }
     };
+    const allColours = async () => {
+      try {
+        setLoadColours(true);
+        const response = await axios.get("/api/colour");
+        setColours(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoadColours(false);
+      }
+    };
 
     allCategories();
     allSizes();
+    allColours();
   }, []);
 
   //   console.log("Categories: ", categories);
@@ -76,7 +94,7 @@ const FilterSidebar = () => {
   return (
     <div className="py-2 overflow-auto flex flex-col my-5 px-2">
       <div className="">
-        {loadCategories || loadSizes ? (
+        {loadCategories || loadSizes || loadColours ? (
           <LoadFilter />
         ) : (
           <Accordion className="space-y-4" type="multiple">
@@ -142,7 +160,7 @@ const FilterSidebar = () => {
                       <Button
                         className={cn(
                           "bg-white text-black hover:text-white px-3 h-9 w-9 flex items-center justify-center hover:bg-primary",
-                            size?._id === sizeId && "bg-primary text-white"
+                          size?._id === sizeId && "bg-primary text-white"
                         )}
                         onClick={(e) => {
                           selectSize({
@@ -156,6 +174,40 @@ const FilterSidebar = () => {
                       </Button>
                     ))}
                   </ul>
+                </AccordionContent>
+              </AccordionItem>
+            )}
+            {colours.length > 0 && (
+              <AccordionItem className="hover:no-underline" value="item-4">
+                <AccordionTrigger>
+                  <h2 className="uppercase text-sm md:text-[16px]">
+                    Filter by Colours
+                  </h2>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="flex items-center gap-3 flex-wrap px-2">
+                    {colours.map((colour: any) => (
+                      <div
+                        style={{
+                          backgroundColor: `${colour?.code}`,
+                        }}
+                        className={cn(
+                          "hover:text-white h-8 w-8 rounded-full mt-4 mb-4 flex items-center justify-center hover:opacity-70",
+                          colour?._id === colourId &&
+                            "outline-black outline outline-5 text-white"
+                        )}
+                        onClick={(e) => {
+                          selectColour({
+                            _id: colour?._id,
+                            name: colour?.name,
+                          });
+                        }}
+                        key={colour?._id}
+                      >
+                        {/* {colour?.code} */}
+                      </div>
+                    ))}
+                  </div>
                 </AccordionContent>
               </AccordionItem>
             )}

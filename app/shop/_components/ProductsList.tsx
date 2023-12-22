@@ -21,8 +21,8 @@ const ProductsList = () => {
 
   const categoryName = filteredData?.filteredData?.category?.name;
   const categoryId = filteredData?.filteredData?.category?._id;
-  const sizeName = filteredData?.filteredData?.size?.name;
   const sizeId = filteredData?.filteredData?.size?._id;
+  const colourId = filteredData?.filteredData?.colour?._id;
 
   useEffect(() => {
     const getProducts = async () => {
@@ -31,6 +31,7 @@ const ProductsList = () => {
         query: {
           categoryId,
           sizeId,
+          colourId,
         },
       });
       try {
@@ -48,7 +49,7 @@ const ProductsList = () => {
     };
 
     getProducts();
-  }, [categoryId, sizeId]);
+  }, [categoryId, sizeId, colourId]);
 
   console.log("Products: ", products);
 

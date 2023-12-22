@@ -1,36 +1,36 @@
-import React from "react";
+"use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { signIn, signOut, useSession } from "next-auth/react";
+import React from "react";
+import { useSession } from "next-auth/react";
 import { HiOutlineUser } from "react-icons/hi";
 
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Copy } from "lucide-react";
+
 import GoogleButton from "@/app/cart/_components/buttons/GoogleButton";
 import GithubButton from "@/app/cart/_components/buttons/GithubButton";
+import { UserProfileDropdown } from "../user-profile-dropdown";
+import { useParams } from "next/navigation";
+
 
 const ProfileLoginDialog = () => {
   // Get the user data from the session upon login
   const { data: session } = useSession();
+
+  const params = useParams();
+
   return (
     <div>
       {session?.user?.email ? (
-        <Avatar onClick={() => signOut()}>
-          <AvatarImage src={session?.user?.image || ""} />
-          <AvatarFallback>P</AvatarFallback>
-        </Avatar>
+        <>
+          <UserProfileDropdown />
+        </>
       ) : (
         <>
           {/* Login functionality here */}
@@ -40,9 +40,9 @@ const ProfileLoginDialog = () => {
                 <HiOutlineUser size={20} />
               </div>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md px-2">
               <DialogHeader>
-                <DialogTitle>Login</DialogTitle>
+                <DialogTitle className="text-2xl">Login</DialogTitle>
                 <DialogDescription>
                   Please login with any of these auth providers.
                 </DialogDescription>

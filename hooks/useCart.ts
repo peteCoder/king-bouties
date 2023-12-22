@@ -13,6 +13,8 @@ interface CartItems {
   imageUrl: Image;
   name: string | undefined;
   _key: string | undefined;
+  colourId: string | undefined;
+  sizeId: string | undefined;
 }
 
 interface DataForOrderedItemsType {
@@ -24,12 +26,19 @@ interface DataForOrderedItemsType {
   quantity: number;
   unitPrice: number;
   subtotal: number;
+  colourId: string | undefined;
+  sizeId: string | undefined;
 }
 [];
 
 interface CartStore {
   cartItems: CartItems[];
-  addItemToCart: (data: ProductSanitySchemaResult) => void;
+  addItemToCart: (
+    data: ProductSanitySchemaResult,
+    otherProperties:
+      | { colourId: string | undefined; sizeId: string | undefined }
+      | undefined
+  ) => void;
   removeItemFromCart: (_id: string) => void;
   resetCart: () => void;
   incrementProductInCart: (_id: string) => void;
@@ -44,7 +53,7 @@ export const useCart = create(
   persist<CartStore>(
     (set, get) => ({
       cartItems: [],
-      addItemToCart: (data) => {
+      addItemToCart: (data, otherProperties) => {
         const cart = get().cartItems;
         //   Check if data _id already exists in exisingData
         //   If it does, increase the number of items
@@ -60,6 +69,8 @@ export const useCart = create(
             totalPrice: (existingProductData.qty + 1) * data?.price,
             imageUrl: data?.gallery[0]?.imageUrl,
             name: data?.name,
+            sizeId: otherProperties?.sizeId,
+            colourId: otherProperties?.colourId,
             _key: existingProductData._key,
           };
           const otherProductDataInList = cart.filter(
@@ -80,6 +91,8 @@ export const useCart = create(
             totalPrice: data.price * 1,
             imageUrl: data?.gallery[0]?.imageUrl,
             name: data?.name,
+            sizeId: otherProperties?.sizeId,
+            colourId: otherProperties?.colourId,
             _key: uuidv4().toString(),
           };
 
@@ -98,12 +111,14 @@ export const useCart = create(
         if (existingProductData) {
           const itemToConsider = {
             ...existingProductData,
-            _key: existingProductData._key, 
+            _key: existingProductData._key,
             qty: existingProductData.qty + 1,
             totalPrice:
               (existingProductData.qty + 1) * existingProductData.price,
             imageUrl: existingProductData.imageUrl,
             name: existingProductData?.name,
+            sizeId: existingProductData.sizeId,
+            colourId: existingProductData.colourId,
           };
 
           // Get all other items in the cart that is not existingProduct Data
@@ -180,6 +195,8 @@ export const useCart = create(
           _key: item._key,
           name: item.name,
           quantity: item.qty,
+          sizeId: item.sizeId,
+          colourId: item.colourId,
           unitPrice: item.price,
           subtotal: item.totalPrice,
         }));

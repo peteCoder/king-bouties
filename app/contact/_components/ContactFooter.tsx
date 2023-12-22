@@ -5,9 +5,9 @@ function ContactFooter() {
   return (
     <footer className="py-10 w-full">
       <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 justify-between items-center container mx-auto">
-        <Link href="/">
-          <img height={33} width={96} src="/logo.png" alt="" />
-        </Link>
+        {/* <Link href="/">
+          <img height={33} width={96} src="/j-logo-bg-removed-2.png" alt="" />
+        </Link> */}
 
         {/* Copy Right */}
         <div>

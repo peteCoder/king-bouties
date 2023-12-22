@@ -8,12 +8,14 @@ import { persist, createJSONStorage } from "zustand/middleware";
 interface FilterDataType {
   category: { _id: string; name: string };
   size: { _id: string; name: string };
+  colour: { _id: string; name: string };
   orderOfItems: string;
 }
 
 interface UseFilterInterface {
   filteredData: FilterDataType;
   addCategory: (category: { _id: string; name: string }) => void;
+  addColour: (colour: { _id: string; name: string }) => void;
   addOrderOfItems: (orderOfItems: { orderOfItems: string }) => void;
   addSize: (size: { _id: string; name: string }) => void;
   removeAllFilter: () => void;
@@ -31,6 +33,10 @@ export const useFilter = create(
           _id: "",
           name: "",
         },
+        colour: {
+          _id: "",
+          name: "",
+        },
         orderOfItems: "createdAt asc",
       },
       addCategory: (category) => {
@@ -42,6 +48,12 @@ export const useFilter = create(
         const prev = get().filteredData;
 
         set({ filteredData: { ...prev, size } });
+      },
+
+      addColour: (colour) => {
+        const prev = get().filteredData;
+
+        set({ filteredData: { ...prev, colour } });
       },
 
       addOrderOfItems: (orderOfItems) => {
@@ -57,6 +69,10 @@ export const useFilter = create(
               name: "",
             },
             size: {
+              _id: "",
+              name: "",
+            },
+            colour: {
               _id: "",
               name: "",
             },

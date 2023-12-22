@@ -1,24 +1,22 @@
 "use client";
 
+
 import Link from "next/link";
 import React from "react";
-import { Button, buttonVariants } from "../../ui/button";
-import { cn } from "@/lib/utils";
-import { AppleIcon, SearchIcon, ShoppingCart } from "lucide-react";
-import { HiOutlineUser } from "react-icons/hi2";
-import Image from "next/image";
+import { Button } from "../../ui/button";
 import MobileMenu from "../mobile-menu";
 import CartDropdown from "../cart-dropdown";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import ProfileLoginDialog from "../profile-login-dialog";
-import { ModeToggle } from "@/components/theme-dropdown";
+import { GrFavorite } from "react-icons/gr";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   // Get the user data from the session upon login
   const { data: session } = useSession();
+
+  const router = useRouter();
 
   return (
     <header className="">
@@ -53,7 +51,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link href={"/contact"} className="nav-links">
-                    Contact
+                    Contact us
                   </Link>
                 </li>
               </ul>
@@ -66,9 +64,14 @@ const Navbar = () => {
                 <MobileMenu />
               </div>
               {/* Add search later */}
-              {/* <div className="nav-links">
-                <SearchIcon size={20} />
-              </div> */}
+              {!session?.user?.email && (
+                <Button
+                  variant={"link"}
+                  onClick={() => router.push("/favourites")}
+                >
+                  <GrFavorite size={18} />
+                </Button>
+              )}
               <ProfileLoginDialog />
 
               <CartDropdown />

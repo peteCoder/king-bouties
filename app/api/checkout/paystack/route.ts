@@ -62,6 +62,12 @@ export async function POST(req: Request) {
             quantity: item.qty,
             unitPrice: item.price,
             subtotal: item.totalPrice,
+            size: item.sizeId
+              ? { _type: "reference", _ref: item.sizeId }
+              : undefined,
+            colour: item.colourId
+              ? { _type: "reference", _ref: item.colourId }
+              : undefined,
           });
           return document;
         })
