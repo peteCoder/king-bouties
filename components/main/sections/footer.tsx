@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCategories } from "@/actions/getCategories";
 import { redirect } from "next/navigation";
 import { CategorySanitySchemaResult } from "@/types";
+import Image from "next/image";
 
 const Footer = async () => {
   const categories: CategorySanitySchemaResult[] = await getCategories();
@@ -23,7 +24,7 @@ const Footer = async () => {
         <div className="w-full flex flex-col lg:flex-row gap-8">
           {/* First Section --- Logo */}
           <div className="">
-            <img className="h-[30px]" src="/images/logo.png" alt="" />
+            {/* <Image width={500} height={400} className="h-[30px]" src="/images/logo.png" alt="" /> */}
             <div className="">
               <h2 className="text-white text-[18px] font-[700]">About us</h2>
               <p className="max-w-[255px] pt-3 font-[300] text-[16px] text-white">
@@ -60,15 +61,21 @@ const Footer = async () => {
                 </Link>
                 <Link
                   className="hover:text-white transition-all duration-300"
-                  href="/"
+                  href="/shop"
                 >
                   Shop
                 </Link>
                 <Link
                   className="hover:text-white transition-all duration-300"
-                  href="/"
+                  href="/contact"
                 >
                   Contact
+                </Link>
+                <Link
+                  className="hover:text-white transition-all duration-300"
+                  href="/policy"
+                >
+                  Pravacy Policy
                 </Link>
               </div>
             </div>

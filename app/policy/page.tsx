@@ -17,13 +17,10 @@ const PrivacyPolicyPage = () => {
       >
         <div className="flex justify-center items-center flex-col">
           <div className="w-full flex flex-col justify-start pt-16 items-center relative">
-            <div className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center uppercase">
-              Terms of Service
-            </div>
             {/* Form */}
             <div className="text-white max-w-[51rem] mx-auto my-10">
               <h1 className="font-extrabold mb-5 text-3xl text-center">
-                KingsBoutique Terms of Service
+                KingsBoutique Terms of Service and Privacy Policy
               </h1>
 
               <p className="mb-4">Effective Date: 2023</p>
@@ -47,10 +44,7 @@ const PrivacyPolicyPage = () => {
               <h2>2. Privacy and Security</h2>
               <div>
                 2.1 Protecting your privacy is a top priority for KingsBoutique.
-                <h1 className="text-3xl font-semibold text-center mb-6">
-                  KingsBoutique Privacy Policy
-                </h1>
-                <p className="mb-4">Effective Date: [Date]</p>
+                <p className="mb-4">Effective Date: 2023</p>
                 <p className="mb-4">
                   KingsBoutique is committed to protecting your privacy. This
                   Privacy Policy explains how we collect, use, disclose, and
@@ -73,22 +67,22 @@ const PrivacyPolicyPage = () => {
                   including processing your orders, providing customer support,
                   and improving our services. We may also use your information
                   to send you promotional emails and updates, but you can
-                  opt-out at any time.
+                  opt-out at any time. If you have any questions or concerns
+                  about our Privacy Policy, please contact us at [Contact
+                  Email].
                 </p>
-                <p className="mt-8 text-center">
-                  If you have any questions or concerns about our Privacy
-                  Policy, please contact us at [Contact Email].
+                <p>
+                  2.2 KingsBoutique employs industry-standard security measures
+                  to safeguard your personal information. However, while we take
+                  all reasonable steps to protect your data, we cannot guarantee
+                  absolute security, and you are encouraged to take appropriate
+                  measures to protect your own information.
                 </p>
               </div>
-              <p>
-                2.2 KingsBoutique employs industry-standard security measures to
-                safeguard your personal information. However, while we take all
-                reasonable steps to protect your data, we cannot guarantee
-                absolute security, and you are encouraged to take appropriate
-                measures to protect your own information.
-              </p>
 
-              <h2>3. Payment Integration</h2>
+              <h2 className="text-xl font-semibold mt-6 mb-2">
+                3. Payment Integration
+              </h2>
               <p>
                 3.1 KingsBoutique utilizes secure payment gateways, including
                 but not limited to Paystack and Flutterwave, to process
@@ -102,7 +96,9 @@ const PrivacyPolicyPage = () => {
                 currency conversion fees.
               </p>
 
-              <h2>4. Orders and Shipping</h2>
+              <h2 className="text-xl font-semibold mt-6 mb-2">
+                4. Orders and Shipping
+              </h2>
               <p>
                 4.1 All orders placed through our website are subject to
                 availability and acceptance. KingsBoutique reserves the right to
@@ -114,7 +110,9 @@ const PrivacyPolicyPage = () => {
                 responsible for any delays in shipping.
               </p>
 
-              <h2>5. Refund and Return Policy</h2>
+              <h2 className="text-xl font-semibold mt-6 mb-2">
+                5. Refund and Return Policy
+              </h2>
               <p>
                 5.1 Our refund and return policy is designed to ensure your
                 satisfaction. Please review our{" "}
@@ -122,7 +120,9 @@ const PrivacyPolicyPage = () => {
                 information on eligibility, process, and timelines.
               </p>
 
-              <h2>6. Intellectual Property</h2>
+              <h2 className="text-xl font-semibold mt-6 mb-2">
+                6. Intellectual Property
+              </h2>
               <p>
                 6.1 All content on the KingsBoutique website, including text,
                 graphics, logos, images, and software, is the exclusive property
@@ -135,20 +135,26 @@ const PrivacyPolicyPage = () => {
                 KingsBoutique.
               </p>
 
-              <h2>7. Termination of Services</h2>
+              <h2 className="text-xl font-semibold mt-6 mb-2">
+                7. Termination of Services
+              </h2>
               <p>
                 7.1 KingsBoutique reserves the right to terminate or suspend
                 services, accounts, or access to the website for any reason,
                 without notice.
               </p>
 
-              <h2>8. Governing Law</h2>
+              <h2 className="text-xl font-semibold mt-6 mb-2">
+                8. Governing Law
+              </h2>
               <p>
                 8.1 These Terms of Service are governed by and construed in
                 accordance with the laws of [Your Jurisdiction].
               </p>
 
-              <h2>9. Contact Information</h2>
+              <h2 className="text-xl font-semibold mt-6 mb-2">
+                9. Contact Information
+              </h2>
               <p>
                 9.1 If you have any questions or concerns about these terms,
                 please contact us at [Contact Email].
