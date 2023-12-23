@@ -1,6 +1,6 @@
 "use client";
 
-import { priceFomatter } from "@/lib/utils";
+import { priceFomatter, formatCurrency } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 
 interface PriceCurrencyProps {
@@ -17,7 +17,7 @@ const PriceCurrency = ({ value }: PriceCurrencyProps) => {
   if (!hasMounted) return null;
 
   return (
-    <div className="font-semibold">{priceFomatter.format(Number(value))}</div>
+    <div className="font-semibold">{formatCurrency(Number(value))}</div>
   );
 };
 

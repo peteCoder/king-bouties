@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import BeatLoader from "react-spinners/BeatLoader";
 import FavouriteData from "./_components/FavouriteData";
+import Footer from "@/components/main/sections/footer";
 
 const FavouritesPage = () => {
   const [hasMounted, setHasMounted] = useState(false);

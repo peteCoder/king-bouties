@@ -17,6 +17,11 @@ export const getProductsBasedOnCategory = async (_id: string) => {
         name,
         code
     },
+    colours[]->{
+        _id,
+        name,
+        code
+    },
     category->{
         _id,
         name,

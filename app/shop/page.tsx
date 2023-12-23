@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 import { TbFilters } from "react-icons/tb";
+import Footer from "@/components/main/sections/footer";
 
 const Shop = () => {
   const [filterSideOpen, setFilterSideOpen] = useState(false);

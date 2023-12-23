@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import BeatLoader from "react-spinners/BeatLoader";
-
+import Footer from "@/components/main/sections/footer";
 
 const CartPage = () => {
   const cartItems = useCart((state) => state.displayCartData());
@@ -17,7 +17,6 @@ const CartPage = () => {
   useEffect(() => {
     setHasMounted(true);
   }, []);
-
 
   if (!hasMounted) {
     return (

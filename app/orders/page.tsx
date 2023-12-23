@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 import OrderData from "./_components/OrderData";
+import Footer from "@/components/main/sections/footer";
 
 const OrdersPage = async () => {
   const orders = await getOrders();
@@ -29,6 +30,7 @@ const OrdersPage = async () => {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 };

@@ -34,7 +34,7 @@ const ProductInfo = ({ data }: { data: ProductSanitySchemaResult }) => {
         )}
       </div>
 
-      <div className="text-sm">{data?.description}</div>
+      <div className="text-sm">{data?.description?.slice(0, 300)}...</div>
 
       {data?.sizes?.length > 0 && (
         <div className="">

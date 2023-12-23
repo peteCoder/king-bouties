@@ -64,6 +64,7 @@ const CartData = () => {
                   <p className="text-gray-500">{item.qty}</p>
                   <p className="text-gray-500 ml-4 border-l border-gray-200 pl-4">
                     <PriceCurrency value={item?.price} />
+                    
                   </p>
                 </div>
                 <span className="font-bold">Total:</span>

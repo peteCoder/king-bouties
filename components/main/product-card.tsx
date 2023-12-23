@@ -33,7 +33,7 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
 
   const router = useRouter();
 
-  // const [activeFabric, setActiveFabric] = useState("");
+  const [activeColour, setActiveColour] = useState("");
 
   const cart = useCart();
 
@@ -59,7 +59,7 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
     }
   };
 
-  console.log(cart.getAllOrderItems());
+  // console.log(cart.getAllOrderItems());
 
   useEffect(() => {
     setHasMounted(true);
@@ -209,21 +209,26 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
             )}
           </div>
           {/* Faric Texture */}
-          {/* <div className="flex items-center gap-1 ">
-            {product.texture.map((t) => (
-              <>
+          {product?.colours?.length > 0 && (
+            <div className="flex items-center gap-1 flex-wrap">
+              {product?.colours?.map((colour) => (
                 <div
-                  key={t._id}
-                  style={{ backgroundImage: `url(${t.image})` }}
-                  onClick={() => setActiveFabric(t._id)}
+                  key={colour._id}
+                  style={{ backgroundColor: `${colour.code}` }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveColour(colour._id);
+                  }}
                   className={cn(
-                    "bg-center bg-cover bg-no-repeat h-[42px] w-[42px] rounded-xl",
-                    t._id === activeFabric && "border-2 border-primary"
+                    "h-8 w-8 rounded-full",
+                    colour._id === activeColour &&
+                      "outline-4 outline outline-black"
                   )}
                 ></div>
-              </>
-            ))}
-          </div> */}
+              ))}
+            </div>
+          )}
+
           {/* Button to add to cart */}
 
           {product.qty_available <= 0 ? (
@@ -245,7 +250,7 @@ const ProductCard: React.FC<ProductProps> = ({ index, product }) => {
                   e.stopPropagation();
                   cart.addItemToCart(product, {
                     sizeId: activeSize,
-                    colourId: "",
+                    colourId: activeColour,
                   });
                 }}
                 className="uppercase flex gap-1 items-center"

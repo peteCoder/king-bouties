@@ -3,6 +3,7 @@ import { getRelatedProductsByCategory } from "@/actions/getRelatedProductsByCate
 import DetailPageGallery from "@/components/main/detail-gallery";
 import DetailPageInfo from "@/components/main/detail-info";
 import ProductCard from "@/components/main/product-card";
+import Footer from "@/components/main/sections/footer";
 import Navbar from "@/components/main/sections/navbar";
 import { ProductSanitySchemaResult } from "@/types";
 
@@ -52,6 +53,7 @@ const ProductDetails = async ({
           </div>
         )}
       </div>
+
     </main>
   );
 };

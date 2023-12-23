@@ -10,6 +10,11 @@ type Size = {
   name: string;
   code: string;
 };
+type Colour = {
+  _id: string;
+  name: string;
+  code: string;
+};
 
 type GalleryImage = {
   _id: string;
@@ -31,6 +36,7 @@ type Product = {
   qty_available: number;
   description?: string;
   sizes: Size[];
+  colours: Colour[];
   category: Category;
   gallery: GalleryImage[];
 };

@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { sanityClient } from "@/lib/client";
 import { UserShippingDataForCheckoutForm } from "@/types";
 import { redirect } from "next/navigation";
+import Footer from "@/components/main/sections/footer";
 
 const CheckoutPage = async () => {
   const session = await getServerSession();
@@ -46,6 +47,7 @@ const CheckoutPage = async () => {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 };
